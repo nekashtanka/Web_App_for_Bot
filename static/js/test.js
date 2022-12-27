@@ -534,7 +534,7 @@ function form(card) {
 
         e.preventDefault();
         
-        let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
+        let message = `<b>💥ЗАЯВКА С САЙТА!</b>\n`;
         message += `<b>Название компании: </b> ${ company.value }\n`
         message += `<b>Телефонный номер: </b> ${ phoneNumber.value }\n`
         message += `<b>Отправитель: </b> ${ name.value }\n`
@@ -649,7 +649,7 @@ function form(card) {
 
       e.preventDefault();
       
-      let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
+      let message = `<b>💥ЗАЯВКА С САЙТА!</b>\n`;
       message += `<b>Отправитель: </b> ${ name.value}\n`
       message += `<b>Почта: </b> ${ email.value }\n`
       message += `<b>Телефонный номер: </b> ${ phoneNumber.value }\n`
