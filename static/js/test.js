@@ -615,18 +615,30 @@ function form(card) {
       
       let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
       message += `<b>Отправитель: </b> ${ name.value}\n`
-      message += `<b>Его почта: </b> ${ email.value }\n`
-      message += `<b>Его почта: </b> ${ phoneNumber.value }`
+      message += `<b>Почта: </b> ${ email.value }\n`
+      message += `<b>Телефонный номер: </b> ${ phoneNumber.value }`
+      message += `<b>Название компании: </b> ${ company.value }`
 
       axios.post(URI_API,{
         chat_id: CHAT_ID,
         parse_mode: 'html',
         text: message
       })
-
-      alert(
-        `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё вопросов и предложат демо»`
-      );
+      .then((res)=>{
+        name.value = '';
+        email.value = '';
+        phoneNumber.value = '';
+        company.value = '';
+        alert(
+          `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё пару вопросов и предложат демо...`
+        );
+      })
+      .catch((err)=>{
+        alert(
+          `Извините, ${name.value}! Сервис не работает, попробуйте оформить заказ через telegram...`
+        );
+        console.warn(err);
+      })
     }
   });
 }
