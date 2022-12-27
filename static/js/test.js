@@ -526,9 +526,43 @@ function form(card) {
         /\S/.test(name.value) &&
         /\S/.test(numberOfPhones.value)
       ) {
-        alert(
-          `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё вопросов и предложат демо»`
-        );
+
+        // Первая отправка axios при нажатии -------------------------------------------------------------------------------------------------------
+        const TOKEN = "5800428906:AAHYoNC9cQ3qmqhNmK5JXw1tLM49JtZugpM";
+        const CHAT_ID = "-1001857114920";
+        const URI_API = `https://api.telegram.org/bot${ TOKEN }/sendMessage`;
+
+        e.preventDefault();
+        
+        let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
+        message += `<b>Название компании: </b> ${ company.value }\n`
+        message += `<b>Телефонный номер: </b> ${ phoneNumber.value }\n`
+        message += `<b>Отправитель: </b> ${ name.value }\n`
+        message += `<b>Кол-во обрабатываемой телефонии: </b> ${ numberOfPhones.value }`
+
+        axios.post(URI_API,{
+          chat_id: CHAT_ID,
+          parse_mode: 'html',
+          text: message
+        })
+        .then((res)=>{
+          alert(
+            `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё пару вопросов и предложат демо...`
+          );
+          name.value = '';
+          email.value = '';
+          phoneNumber.value = '';
+          company.value = '';
+          numberOfPhones.value = '';
+        })
+        .catch((err)=>{
+          alert(
+            `Извините, ${name.value}! Сервис не работает, попробуйте оформить заказ через telegram...`
+          );
+          console.warn(err);
+        })
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+      
       }
     });
   }
@@ -607,6 +641,8 @@ function form(card) {
       (validateEmail(email.value) || /\S/.test(email.value)) &&
       /\S/.test(name.value)
     ) {
+
+      // Вторая отправка axios при нажатии -------------------------------------------------------------------------------------------------------
       const TOKEN = "5800428906:AAHYoNC9cQ3qmqhNmK5JXw1tLM49JtZugpM";
       const CHAT_ID = "-1001857114920";
       const URI_API = `https://api.telegram.org/bot${ TOKEN }/sendMessage`;
@@ -616,7 +652,7 @@ function form(card) {
       let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
       message += `<b>Отправитель: </b> ${ name.value}\n`
       message += `<b>Почта: </b> ${ email.value }\n`
-      message += `<b>Телефонный номер: </b> ${ phoneNumber.value }`
+      message += `<b>Телефонный номер: </b> ${ phoneNumber.value }\n`
       message += `<b>Название компании: </b> ${ company.value }`
 
       axios.post(URI_API,{
@@ -625,13 +661,13 @@ function form(card) {
         text: message
       })
       .then((res)=>{
+        alert(
+          `${ name.value }, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё пару вопросов и предложат демо...`
+        );
         name.value = '';
         email.value = '';
         phoneNumber.value = '';
         company.value = '';
-        alert(
-          `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё пару вопросов и предложат демо...`
-        );
       })
       .catch((err)=>{
         alert(
@@ -639,6 +675,9 @@ function form(card) {
         );
         console.warn(err);
       })
+      //-----------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
     }
   });
 }
