@@ -503,7 +503,7 @@ function form(card) {
       sendingForm.append(sendingChecbox, sendingLabel);
       form.append(sendingForm);
     }
-    checkout.addEventListener("click", () => {
+    checkout.addEventListener("click", function(e){
       if (document.getElementById("numberOfErr")) {
         const numberOfErr = document.getElementById("numberOfErr");
         numberOfErr.remove();
