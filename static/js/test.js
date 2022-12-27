@@ -296,11 +296,12 @@ function form(card) {
   const checkout = document.createElement("button");
   checkout.className = "order";
   checkout.textContent = "Оформить";
+  checkout.type = "submit";
   boxButtonCheckout.append(checkout);
 
   const form = document.createElement("form");
   form.className = "form";
-  form.method = "GET"
+  form.id = "tg"
 
   const companyForm = document.createElement("div");
   companyForm.className = "form-div";
@@ -329,6 +330,7 @@ function form(card) {
   const nameDescription = document.createElement("p");
   nameDescription.textContent = "Ваше Имя";
   const name = document.createElement("input");
+  name.name = "nam"
   name.placeholder = "Введите ваше имя";
   name.type = "text";
   name.className = "form-input";
@@ -346,6 +348,7 @@ function form(card) {
   email.placeholder = "Введите вашу почту";
   email.type = "email";
   email.className = "form-input";
+  email.name = "email"
   emailForm.append(emailDescription, email);
 
   const telephonyForm = document.createElement("div");
@@ -531,7 +534,7 @@ function form(card) {
   }
   mainBox.append(boxButton, form, boxButtonCheckout);
   document.body.append(mainBox);
-  checkout.addEventListener("click", () => {
+  checkout.addEventListener("click", function(e){
     if (document.getElementById("companyErr")) {
       const companyErr = document.getElementById("companyErr");
       companyErr.remove();
@@ -604,6 +607,23 @@ function form(card) {
       (validateEmail(email.value) || /\S/.test(email.value)) &&
       /\S/.test(name.value)
     ) {
+      const TOKEN = "5800428906:AAHYoNC9cQ3qmqhNmK5JXw1tLM49JtZugpM";
+      const CHAT_ID = "-1001857114920";
+      const URI_API = `https://api.telegram.org/bot${ TOKEN }/sendMessage`;
+
+      e.preventDefault();
+      
+      let message = `<b>ЗАЯВКА С САЙТА!</b>\n`;
+      message += `<b>Отправитель: </b> ${ name.value}\n`
+      message += `<b>Его почта: </b> ${ email.value }\n`
+      message += `<b>Его почта: </b> ${ phoneNumber.value }`
+
+      axios.post(URI_API,{
+        chat_id: CHAT_ID,
+        parse_mode: 'html',
+        text: message
+      })
+
       alert(
         `${name.value}, спасибо! Сценаристы Бот N. свяжутся с Вами, возможно зададут ещё вопросов и предложат демо»`
       );
